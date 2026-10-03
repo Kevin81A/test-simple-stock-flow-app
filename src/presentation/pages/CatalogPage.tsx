@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { apiClient } from '../../infrastructure/http/apiClient';
 import { CategoryDto, ProductViewDto } from '../../infrastructure/dto/api.dto';
 import { useAuth } from '../../application/AuthContext';
@@ -63,7 +63,7 @@ export const CatalogPage: React.FC = () => {
           setFormData((prev) => ({ ...prev, categoryId: cats[0].id }));
         }
       })
-      .catch((err) => console.error('Error cargando categorías:', err));
+      .catch((err) => console.error('Error loading categories:', err));
   }, []);
 
   // Fetch products on filter or page change
@@ -81,7 +81,7 @@ export const CatalogPage: React.FC = () => {
       setTotalPages(res.totalPages);
       setTotal(res.total);
     } catch (err: any) {
-      setError(err.message || 'Error al consultar productos.');
+      setError(err.message || 'Error fetching products.');
     } finally {
       setLoading(false);
     }
@@ -126,12 +126,12 @@ export const CatalogPage: React.FC = () => {
     const stockNum = parseInt(formData.stock, 10);
 
     if (isNaN(priceNum) || priceNum <= 0) {
-      setFormError('El precio debe ser mayor a cero.');
+      setFormError('Price must be greater than zero.');
       return;
     }
 
     if (isNaN(stockNum) || stockNum < 0) {
-      setFormError('El stock inicial no puede ser negativo.');
+      setFormError('Initial stock cannot be negative.');
       return;
     }
 
@@ -155,7 +155,7 @@ export const CatalogPage: React.FC = () => {
       setIsCreateModalOpen(false);
       fetchProducts();
     } catch (err: any) {
-      setFormError(err.message || 'Error guardando el producto.');
+      setFormError(err.message || 'Error saving product.');
     } finally {
       setFormSubmitting(false);
     }
@@ -163,7 +163,7 @@ export const CatalogPage: React.FC = () => {
 
   // Handle delete
   const handleDeleteProduct = async (id: string) => {
-    if (!window.confirm('¿Está seguro de que desea eliminar este producto? Desaparecerá del catálogo.')) {
+    if (!window.confirm('Are you sure you want to delete this product? It will be archived and hidden from the catalog.')) {
       return;
     }
 
@@ -171,7 +171,7 @@ export const CatalogPage: React.FC = () => {
       await apiClient.deleteProduct(id);
       fetchProducts();
     } catch (err: any) {
-      alert(err.message || 'Error eliminando el producto.');
+      alert(err.message || 'Error deleting product.');
     }
   };
 
@@ -179,7 +179,7 @@ export const CatalogPage: React.FC = () => {
   const handleImageSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!imageModalProduct || !selectedFile) {
-      setUploadError('Seleccione una imagen válida.');
+      setUploadError('Please select a valid image file.');
       return;
     }
 
@@ -191,7 +191,7 @@ export const CatalogPage: React.FC = () => {
       setSelectedFile(null);
       fetchProducts();
     } catch (err: any) {
-      setUploadError(err.message || 'Error al subir la imagen.');
+      setUploadError(err.message || 'Error uploading image.');
     } finally {
       setUploading(false);
     }
@@ -203,10 +203,10 @@ export const CatalogPage: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Catálogo de Productos
+            Product Catalog
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Consulta y administración del inventario en tiempo real ({total} productos)
+            Real-time inventory lookup and management ({total} products)
           </p>
         </div>
 
@@ -216,7 +216,7 @@ export const CatalogPage: React.FC = () => {
             className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2.5 rounded-xl shadow-md transition"
           >
             <Plus className="w-5 h-5" />
-            <span>Nuevo Producto</span>
+            <span>New Product</span>
           </button>
         )}
       </div>
@@ -227,7 +227,7 @@ export const CatalogPage: React.FC = () => {
           <Search className="w-5 h-5 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
-            placeholder="Buscar por nombre (ej. Martillo, Pintura)..."
+            placeholder="Search by product name..."
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -247,7 +247,7 @@ export const CatalogPage: React.FC = () => {
             }}
             className="w-full pl-11 pr-8 py-2.5 bg-slate-800/80 border border-slate-700/80 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
           >
-            <option value="">Todas las categorías</option>
+            <option value="">All categories</option>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
@@ -261,7 +261,7 @@ export const CatalogPage: React.FC = () => {
       {loading ? (
         <div className="py-24 flex flex-col items-center justify-center text-slate-400">
           <Loader2 className="w-10 h-10 animate-spin text-blue-500 mb-3" />
-          <p className="text-sm">Cargando catálogo...</p>
+          <p className="text-sm">Loading catalog...</p>
         </div>
       ) : error ? (
         <div className="bg-rose-950/50 border border-rose-800/80 p-6 rounded-2xl text-rose-300 text-center my-8">
@@ -271,8 +271,8 @@ export const CatalogPage: React.FC = () => {
       ) : products.length === 0 ? (
         <div className="text-center py-24 bg-slate-900/50 border border-slate-800/80 rounded-2xl">
           <ImageIcon className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-          <p className="text-slate-300 font-medium">No se encontraron productos</p>
-          <p className="text-slate-500 text-sm mt-1">Pruebe ajustando los filtros de búsqueda</p>
+          <p className="text-slate-300 font-medium">No products found</p>
+          <p className="text-slate-500 text-sm mt-1">Try adjusting your search or category filters</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -292,7 +292,7 @@ export const CatalogPage: React.FC = () => {
                 ) : (
                   <div className="flex flex-col items-center text-slate-600">
                     <ImageIcon className="w-10 h-10 mb-1" />
-                    <span className="text-xs">Sin imagen</span>
+                    <span className="text-xs">No image</span>
                   </div>
                 )}
 
@@ -303,7 +303,7 @@ export const CatalogPage: React.FC = () => {
                 {user?.role === 'admin' && (
                   <button
                     onClick={() => setImageModalProduct(p)}
-                    title="Subir o cambiar imagen"
+                    title="Upload or change image"
                     className="absolute top-3 right-3 p-2 bg-slate-900/80 hover:bg-blue-600 text-slate-300 hover:text-white rounded-lg backdrop-blur-md transition border border-slate-700/50"
                   >
                     <Upload className="w-4 h-4" />
@@ -319,7 +319,7 @@ export const CatalogPage: React.FC = () => {
                   </h3>
                   <div className="flex items-baseline space-x-1.5 mt-2">
                     <span className="text-2xl font-extrabold text-white">
-                      ${p.price.toLocaleString('es-CO')}
+                      ${p.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                     </span>
                     <span className="text-xs font-medium text-slate-400">
                       {p.currency}
@@ -329,13 +329,13 @@ export const CatalogPage: React.FC = () => {
 
                 <div className="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
                   <div>
-                    <span className="text-xs text-slate-400 block">Stock disponible</span>
+                    <span className="text-xs text-slate-400 block">Available stock</span>
                     <span
                       className={`text-sm font-bold ${
                         p.stock > 0 ? 'text-emerald-400' : 'text-rose-400'
                       }`}
                     >
-                      {p.stock > 0 ? `${p.stock} unidades` : 'Agotado'}
+                      {p.stock > 0 ? `${p.stock} units` : 'Out of stock'}
                     </span>
                   </div>
 
@@ -344,14 +344,14 @@ export const CatalogPage: React.FC = () => {
                       <>
                         <button
                           onClick={() => handleOpenEdit(p)}
-                          title="Editar producto"
+                          title="Edit product"
                           className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-800 rounded-lg transition"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleDeleteProduct(p.id)}
-                          title="Eliminar producto"
+                          title="Delete product"
                           className="p-2 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -362,7 +362,7 @@ export const CatalogPage: React.FC = () => {
                     <button
                       onClick={() => addToCart(p, 1)}
                       disabled={p.stock <= 0}
-                      title={p.stock <= 0 ? 'Sin stock' : 'Agregar al carrito'}
+                      title={p.stock <= 0 ? 'Out of stock' : 'Add to cart'}
                       className="p-2.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 disabled:text-slate-600 text-white rounded-xl shadow-md transition"
                     >
                       <ShoppingCart className="w-4 h-4" />
@@ -379,7 +379,7 @@ export const CatalogPage: React.FC = () => {
       {totalPages > 1 && (
         <div className="mt-8 flex items-center justify-between border-t border-slate-800 pt-6">
           <p className="text-sm text-slate-400">
-            Página <span className="font-semibold text-white">{page}</span> de{' '}
+            Page <span className="font-semibold text-white">{page}</span> of{' '}
             <span className="font-semibold text-white">{totalPages}</span>
           </p>
 
@@ -390,27 +390,27 @@ export const CatalogPage: React.FC = () => {
               className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 disabled:opacity-40 transition flex items-center space-x-1"
             >
               <ChevronLeft className="w-4 h-4" />
-              <span>Anterior</span>
+              <span>Previous</span>
             </button>
             <button
               onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
               disabled={page >= totalPages}
               className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 disabled:opacity-40 transition flex items-center space-x-1"
             >
-              <span>Siguiente</span>
+              <span>Next</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
       )}
 
-      {/* Modal Crear / Editar Producto */}
+      {/* Modal Create / Edit Product */}
       {isCreateModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-4 border-b border-slate-800">
               <h3 className="text-lg font-bold text-white">
-                {editingProduct ? 'Editar Producto' : 'Crear Producto'}
+                {editingProduct ? 'Edit Product' : 'Create Product'}
               </h3>
               <button
                 onClick={() => setIsCreateModalOpen(false)}
@@ -430,21 +430,21 @@ export const CatalogPage: React.FC = () => {
             <form onSubmit={handleProductSubmit} className="mt-4 space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-                  Nombre del producto
+                  Product Name
                 </label>
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Ej. Martillo de bola"
+                  placeholder="e.g. Ball-peen Hammer"
                   className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-                  Categoría
+                  Category
                 </label>
                 <select
                   required
@@ -463,7 +463,7 @@ export const CatalogPage: React.FC = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-                    Precio (COP)
+                    Price (COP)
                   </label>
                   <input
                     type="number"
@@ -500,7 +500,7 @@ export const CatalogPage: React.FC = () => {
                   onClick={() => setIsCreateModalOpen(false)}
                   className="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-sm font-medium transition"
                 >
-                  Cancelar
+                  Cancel
                 </button>
                 <button
                   type="submit"
@@ -508,7 +508,7 @@ export const CatalogPage: React.FC = () => {
                   className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold shadow-md transition flex items-center"
                 >
                   {formSubmitting && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                  {editingProduct ? 'Guardar Cambios' : 'Crear Producto'}
+                  {editingProduct ? 'Save Changes' : 'Create Product'}
                 </button>
               </div>
             </form>
@@ -516,13 +516,13 @@ export const CatalogPage: React.FC = () => {
         </div>
       )}
 
-      {/* Modal Subir Imagen */}
+      {/* Modal Upload Image */}
       {imageModalProduct && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-4 border-b border-slate-800">
               <h3 className="text-lg font-bold text-white">
-                Imagen para: {imageModalProduct.name}
+                Image for: {imageModalProduct.name}
               </h3>
               <button
                 onClick={() => setImageModalProduct(null)}
@@ -542,7 +542,7 @@ export const CatalogPage: React.FC = () => {
             <form onSubmit={handleImageSubmit} className="mt-4 space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                  Seleccionar archivo (JPEG, PNG o WEBP, máx. 5 MB)
+                  Select file (JPEG, PNG, or WebP, max 5 MB)
                 </label>
                 <input
                   type="file"
@@ -563,7 +563,7 @@ export const CatalogPage: React.FC = () => {
                   onClick={() => setImageModalProduct(null)}
                   className="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-sm font-medium transition"
                 >
-                  Cancelar
+                  Cancel
                 </button>
                 <button
                   type="submit"
@@ -571,7 +571,7 @@ export const CatalogPage: React.FC = () => {
                   className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-sm font-semibold shadow-md transition flex items-center"
                 >
                   {uploading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                  Subir Imagen
+                  Upload Image
                 </button>
               </div>
             </form>

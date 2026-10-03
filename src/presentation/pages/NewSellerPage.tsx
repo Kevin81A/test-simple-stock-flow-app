@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useAuth } from '../../application/AuthContext';
 import { apiClient, ApiError } from '../../infrastructure/http/apiClient';
 import { UserPlus, ShieldAlert, CheckCircle, AlertTriangle, Eye, EyeOff } from 'lucide-react';
@@ -26,15 +26,15 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
         <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-4">
           <ShieldAlert className="w-8 h-8" />
         </div>
-        <h2 className="text-xl font-bold text-slate-800">Acceso Denegado</h2>
+        <h2 className="text-xl font-bold text-slate-800">Access Denied</h2>
         <p className="text-sm text-slate-600 mt-2">
-          Solo los administradores del sistema tienen autorización para registrar nuevos vendedores.
+          Only system administrators are authorized to register new sellers.
         </p>
         <button
           onClick={() => onNavigate('catalog')}
           className="mt-6 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl text-sm transition"
         >
-          Volver al Catálogo
+          Return to Catalog
         </button>
       </div>
     );
@@ -48,12 +48,12 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
 
     // Client-side validations
     if (password !== confirmPassword) {
-      setError('Las contraseñas ingresadas no coinciden.');
+      setError('Passwords do not match.');
       return;
     }
 
     if (password.length < 8) {
-      setError('La contraseña debe tener un mínimo de 8 caracteres.');
+      setError('Password must be at least 8 characters long.');
       return;
     }
 
@@ -72,7 +72,7 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
           setFieldErrors(err.errors);
         }
       } else {
-        setError('Ocurrió un error al registrar el vendedor.');
+        setError('An error occurred while creating the seller account.');
       }
     } finally {
       setLoading(false);
@@ -89,9 +89,9 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
               <UserPlus className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-xl font-bold">Registrar Nuevo Vendedor</h1>
+              <h1 className="text-xl font-bold">Register New Seller</h1>
               <p className="text-xs text-slate-400 mt-0.5">
-                Cree una cuenta para permitir a un vendedor gestionar inventario y ventas.
+                Create an account to allow a seller to manage inventory and sales.
               </p>
             </div>
           </div>
@@ -103,9 +103,9 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
             <div className="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start gap-3 text-emerald-800 animate-fade-in">
               <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5 text-emerald-600" />
               <div>
-                <h4 className="font-semibold text-sm">Vendedor creado con éxito</h4>
+                <h4 className="font-semibold text-sm">Seller created successfully</h4>
                 <p className="text-xs mt-0.5">
-                  El usuario <strong>{createdSeller}</strong> ahora puede iniciar sesión con el rol de Vendedor.
+                  User <strong>{createdSeller}</strong> can now log in with the Seller role.
                 </p>
               </div>
             </div>
@@ -115,7 +115,7 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
             <div className="mb-6 p-4 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3 text-rose-800">
               <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5 text-rose-600" />
               <div>
-                <h4 className="font-semibold text-sm">Error al crear vendedor</h4>
+                <h4 className="font-semibold text-sm">Error creating seller</h4>
                 <p className="text-xs mt-0.5">{error}</p>
               </div>
             </div>
@@ -124,14 +124,14 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                Nombre de Usuario *
+                Username *
               </label>
               <input
                 type="text"
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Ejemplo: carlos_ventas"
+                placeholder="e.g. carlos_sales"
                 className={`w-full px-4 py-2.5 bg-slate-50 border rounded-xl text-sm focus:outline-none focus:ring-2 transition ${
                   fieldErrors['username']
                     ? 'border-rose-400 focus:ring-rose-200'
@@ -145,22 +145,22 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
 
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                Rol Asignado
+                Assigned Role
               </label>
               <input
                 type="text"
                 disabled
-                value="Vendedor (seller)"
+                value="Seller (seller)"
                 className="w-full px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-500 cursor-not-allowed font-medium"
               />
               <span className="text-[11px] text-slate-400 mt-1 block">
-                Por política de seguridad (DP-04), los nuevos usuarios son registrados estrictamente con rol de Vendedor.
+                Per security policy (DP-04), new users are strictly registered with the Seller role.
               </span>
             </div>
 
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                Contraseña *
+                Password *
               </label>
               <div className="relative">
                 <input
@@ -168,7 +168,7 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Mínimo 8 caracteres (letras y números)"
+                  placeholder="Minimum 8 characters (letters and numbers)"
                   className={`w-full px-4 py-2.5 bg-slate-50 border rounded-xl text-sm focus:outline-none focus:ring-2 transition ${
                     fieldErrors['password']
                       ? 'border-rose-400 focus:ring-rose-200'
@@ -190,14 +190,14 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
 
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                Confirmar Contraseña *
+                Confirm Password *
               </label>
               <input
                 type={showPassword ? 'text' : 'password'}
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Repita la contraseña"
+                placeholder="Repeat password"
                 className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition"
               />
             </div>
@@ -208,14 +208,14 @@ export const NewSellerPage: React.FC<NewSellerPageProps> = ({ onNavigate }) => {
                 onClick={() => onNavigate('catalog')}
                 className="px-5 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-800 transition"
               >
-                Cancelar
+                Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
                 className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold text-sm rounded-xl transition shadow-sm disabled:bg-slate-300"
               >
-                {loading ? 'Creando vendedor...' : 'Registrar Vendedor'}
+                {loading ? 'Creating seller...' : 'Register Seller'}
               </button>
             </div>
           </form>

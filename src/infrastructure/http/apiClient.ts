@@ -1,4 +1,4 @@
-import {
+﻿import {
   AuthResultDto,
   CategoryDto,
   PagedResultDto,
@@ -65,16 +65,16 @@ class ApiClient {
     }
 
     if (!response.ok) {
-      let errorMessage = 'Ocurrió un error inesperado.';
+      let errorMessage = 'An unexpected error occurred.';
       let errors: Record<string, string[]> | undefined;
 
       if (response.status === 401) {
-        errorMessage = 'La sesión expiró o las credenciales son incorrectas.';
+        errorMessage = 'Session expired or credentials are invalid.';
         this.setToken(null);
       } else if (response.status === 403) {
-        errorMessage = 'No tiene permiso para realizar esta acción.';
+        errorMessage = 'You do not have permission to perform this action.';
       } else if (response.status === 404) {
-        errorMessage = 'El recurso no existe.';
+        errorMessage = 'The requested resource was not found.';
       } else {
         try {
           const problem: ProblemDetailsDto = await response.json();

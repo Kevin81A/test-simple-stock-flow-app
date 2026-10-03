@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useAuth } from './application/AuthContext';
 import { Navbar } from './presentation/components/Navbar';
 import { LoginPage } from './presentation/pages/LoginPage';
@@ -30,9 +30,9 @@ export const AppContent: React.FC = () => {
 
       <footer className="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>Simple Stock Flow · Sistema de Inventarios y Ventas</span>
+          <span>Simple Stock Flow · Inventory & Sales Management System</span>
           <span className="font-medium text-slate-400">
-            Prueba Técnica SDD · SENA ADSO Ficha 3413974
+            SDD Technical Test · SENA ADSO Class 3413974
           </span>
         </div>
       </footer>

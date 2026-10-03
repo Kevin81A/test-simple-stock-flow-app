@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useAuth } from '../application/AuthContext';
 import {
   Package,
@@ -38,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                 Simple Stock Flow
               </span>
               <span className="text-xs block text-slate-400 font-medium">
-                Inventarios y Ventas
+                Inventory & Sales
               </span>
             </div>
           </div>
@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
               }`}
             >
               <Package className="w-4 h-4" />
-              <span>Catálogo</span>
+              <span>Catalog</span>
             </button>
 
             <button
@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
               }`}
             >
               <ShoppingCart className="w-4 h-4" />
-              <span>Venta</span>
+              <span>Checkout</span>
               {totalCartCount > 0 && (
                 <span className="ml-1 bg-amber-500 text-slate-900 font-bold px-1.5 py-0.5 rounded-full text-xs">
                   {totalCartCount}
@@ -83,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
               }`}
             >
               <Receipt className="w-4 h-4" />
-              <span>Historial</span>
+              <span>History</span>
             </button>
 
             <button
@@ -95,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
               }`}
             >
               <BarChart3 className="w-4 h-4" />
-              <span>Reporte</span>
+              <span>Report</span>
             </button>
 
             {user?.role === 'admin' && (
@@ -108,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                 }`}
               >
                 <UserPlus className="w-4 h-4" />
-                <span>Nuevo Vendedor</span>
+                <span>New Seller</span>
               </button>
             )}
           </nav>
@@ -118,11 +118,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
             <div className="flex items-center space-x-2 text-sm">
               {user?.role === 'admin' ? (
                 <span className="inline-flex items-center gap-1.5 bg-purple-900/60 text-purple-300 px-2.5 py-1 rounded-full text-xs font-semibold border border-purple-700/50">
-                  <Shield className="w-3.5 h-3.5" /> Administrador
+                  <Shield className="w-3.5 h-3.5" /> Administrator
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1.5 bg-emerald-900/60 text-emerald-300 px-2.5 py-1 rounded-full text-xs font-semibold border border-emerald-700/50">
-                  <User className="w-3.5 h-3.5" /> Vendedor
+                  <User className="w-3.5 h-3.5" /> Seller
                 </span>
               )}
               <span className="font-medium text-slate-200">{user?.username}</span>
@@ -130,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
 
             <button
               onClick={logout}
-              title="Cerrar sesión"
+              title="Sign out"
               className="p-2 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition"
             >
               <LogOut className="w-5 h-5" />

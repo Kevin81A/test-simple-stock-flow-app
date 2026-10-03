@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useAuth } from '../../application/AuthContext';
 import { apiClient, ApiError } from '../../infrastructure/http/apiClient';
 import { ShoppingCart, Trash2, Plus, Minus, CheckCircle, AlertTriangle, ArrowRight } from 'lucide-react';
@@ -18,18 +18,18 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
   const handleCheckout = async () => {
     setError(null);
     if (cart.length === 0) {
-      setError('El carrito está vacío. Agregue productos antes de realizar una venta.');
+      setError('The cart is empty. Add products before registering a sale.');
       return;
     }
 
     // Check stock locally before sending
     for (const item of cart) {
       if (item.quantity > item.availableStock) {
-        setError(`El producto "${item.name}" supera el stock disponible (${item.availableStock}).`);
+        setError(`Product "${item.name}" exceeds available stock (${item.availableStock}).`);
         return;
       }
       if (item.quantity <= 0) {
-        setError(`La cantidad del producto "${item.name}" debe ser mayor a cero.`);
+        setError(`Quantity for product "${item.name}" must be greater than zero.`);
         return;
       }
     }
@@ -48,7 +48,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
       if (err instanceof ApiError) {
         setError(err.message);
       } else {
-        setError('Ocurrió un error al procesar la venta. Verifique los datos o el stock disponible.');
+        setError('An error occurred while processing the sale. Please verify product data and stock.');
       }
     } finally {
       setLoading(false);
@@ -62,13 +62,13 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
           <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-10 h-10" />
           </div>
-          <h2 className="text-2xl font-bold text-slate-800">¡Venta Registrada Exitosamente!</h2>
+          <h2 className="text-2xl font-bold text-slate-800">Sale Registered Successfully!</h2>
           <p className="text-slate-600 mt-2">
-            La transacción se completó y el inventario ha sido actualizado en tiempo real.
+            The transaction was completed and inventory has been updated in real-time.
           </p>
           <div className="my-6 p-4 bg-slate-50 rounded-xl border border-slate-200 inline-block text-left">
             <span className="text-xs uppercase font-semibold text-slate-400 block tracking-wider">
-              Identificador de Venta
+              Sale Identifier
             </span>
             <code className="text-lg font-mono font-bold text-slate-900">{successSaleId}</code>
           </div>
@@ -81,7 +81,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
               }}
               className="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition shadow-sm"
             >
-              Nueva Venta (Catálogo)
+              New Sale (Catalog)
             </button>
             <button
               onClick={() => {
@@ -90,7 +90,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
               }}
               className="w-full sm:w-auto px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl transition flex items-center justify-center gap-2"
             >
-              <span>Ver en Historial</span>
+              <span>View in History</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -105,10 +105,10 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
             <ShoppingCart className="w-7 h-7 text-blue-600" />
-            <span>Punto de Venta / Carrito</span>
+            <span>Point of Sale / Cart</span>
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            Revise los productos seleccionados antes de confirmar la transacción de venta.
+            Review selected items before confirming the transaction.
           </p>
         </div>
         {cart.length > 0 && (
@@ -117,7 +117,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
             className="text-sm text-rose-600 hover:text-rose-700 font-medium transition flex items-center gap-1"
           >
             <Trash2 className="w-4 h-4" />
-            <span>Vaciar Carrito</span>
+            <span>Clear Cart</span>
           </button>
         )}
       </div>
@@ -126,7 +126,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
         <div className="mb-6 p-4 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3 text-rose-800">
           <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5 text-rose-600" />
           <div>
-            <h4 className="font-semibold text-sm">Error en la transacción</h4>
+            <h4 className="font-semibold text-sm">Transaction Error</h4>
             <p className="text-sm mt-0.5">{error}</p>
           </div>
         </div>
@@ -137,15 +137,15 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
           <div className="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-4">
             <ShoppingCart className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-semibold text-slate-800">El carrito de venta está vacío</h3>
+          <h3 className="text-lg font-semibold text-slate-800">The sale cart is empty</h3>
           <p className="text-slate-500 text-sm max-w-sm mx-auto mt-1 mb-6">
-            Seleccione productos desde el catálogo para agregarlos y registrar una nueva venta.
+            Select products from the catalog to add them and register a new sale.
           </p>
           <button
             onClick={() => onNavigate('catalog')}
             className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition shadow-sm inline-flex items-center gap-2"
           >
-            <span>Ir al Catálogo de Productos</span>
+            <span>Go to Product Catalog</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -154,7 +154,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
           {/* Items Table */}
           <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
             <div className="p-4 sm:p-6 border-b border-slate-100">
-              <h2 className="font-semibold text-slate-800">Productos a Facturar ({cart.length})</h2>
+              <h2 className="font-semibold text-slate-800">Products to Bill ({cart.length})</h2>
             </div>
             <div className="divide-y divide-slate-100">
               {cart.map((item) => {
@@ -166,15 +166,15 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-slate-900 truncate">{item.name}</h3>
                       <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
-                        <span>Precio unitario: ${item.price.toLocaleString('es-CO', { minimumFractionDigits: 2 })} COP</span>
+                        <span>Unit price: ${item.price.toLocaleString('en-US', { minimumFractionDigits: 2 })} COP</span>
                         <span>•</span>
                         <span className={hasStockIssue ? 'text-rose-600 font-semibold' : 'text-slate-500'}>
-                          Stock disponible: {item.availableStock}
+                          Available stock: {item.availableStock}
                         </span>
                       </div>
                       {hasStockIssue && (
                         <p className="text-xs text-rose-600 font-medium mt-1">
-                          ¡Advertencia: Cantidad seleccionada excede el stock actual!
+                          Warning: Selected quantity exceeds current available stock!
                         </p>
                       )}
                     </div>
@@ -215,7 +215,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
                       <div className="text-right min-w-[100px]">
                         <span className="text-xs text-slate-400 block">Subtotal</span>
                         <span className="text-base font-bold text-slate-900">
-                          ${subtotal.toLocaleString('es-CO', { minimumFractionDigits: 2 })}
+                          ${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                         </span>
                       </div>
 
@@ -223,7 +223,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
                       <button
                         onClick={() => removeFromCart(item.productId)}
                         className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition"
-                        title="Eliminar de la venta"
+                        title="Remove from cart"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -238,27 +238,27 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sticky top-24">
               <h2 className="text-lg font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100">
-                Resumen de la Venta
+                Order Summary
               </h2>
 
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between text-slate-600">
-                  <span>Líneas de productos</span>
+                  <span>Product lines</span>
                   <span className="font-semibold text-slate-800">{cart.length}</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
-                  <span>Total unidades</span>
+                  <span>Total units</span>
                   <span className="font-semibold text-slate-800">
                     {cart.reduce((acc, item) => acc + item.quantity, 0)}
                   </span>
                 </div>
                 <div className="pt-3 border-t border-slate-100 flex justify-between items-baseline">
-                  <span className="text-base font-bold text-slate-900">Total a Pagar</span>
+                  <span className="text-base font-bold text-slate-900">Total to Pay</span>
                   <div className="text-right">
                     <span className="text-2xl font-black text-blue-600">
-                      ${total.toLocaleString('es-CO', { minimumFractionDigits: 2 })}
+                      ${total.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                     </span>
-                    <span className="text-xs text-slate-400 block font-normal">COP (Pesos Colombianos)</span>
+                    <span className="text-xs text-slate-400 block font-normal">COP (Colombian Pesos)</span>
                   </div>
                 </div>
               </div>
@@ -274,11 +274,11 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
                 }`}
               >
                 {loading ? (
-                  <span>Procesando venta...</span>
+                  <span>Processing sale...</span>
                 ) : (
                   <>
                     <CheckCircle className="w-5 h-5" />
-                    <span>Confirmar y Facturar</span>
+                    <span>Confirm and Complete Sale</span>
                   </>
                 )}
               </button>
@@ -288,7 +288,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
                 onClick={() => onNavigate('catalog')}
                 className="w-full mt-3 py-2 text-sm text-slate-600 hover:text-slate-900 font-medium text-center"
               >
-                Seguir agregando productos
+                Continue adding products
               </button>
             </div>
           </div>

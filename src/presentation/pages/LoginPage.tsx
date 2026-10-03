@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useAuth } from '../../application/AuthContext';
 import { Package, Lock, User, AlertCircle, Loader2 } from 'lucide-react';
 
@@ -12,7 +12,7 @@ export const LoginPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username.trim() || !password) {
-      setError('Por favor complete todos los campos.');
+      setError('Please fill in all fields.');
       return;
     }
 
@@ -22,7 +22,7 @@ export const LoginPage: React.FC = () => {
     try {
       await login(username, password);
     } catch (err: any) {
-      setError(err.message || 'Usuario o contraseña incorrectos.');
+      setError(err.message || 'Invalid username or password.');
     } finally {
       setLoading(false);
     }
@@ -38,7 +38,7 @@ export const LoginPage: React.FC = () => {
           Simple Stock Flow
         </h2>
         <p className="mt-2 text-sm text-slate-400">
-          Inicia sesión para gestionar el inventario y ventas
+          Sign in to manage inventory and sales
         </p>
       </div>
 
@@ -57,7 +57,7 @@ export const LoginPage: React.FC = () => {
                 htmlFor="username"
                 className="block text-sm font-medium text-slate-300 mb-1"
               >
-                Nombre de usuario o correo
+                Username or email
               </label>
               <div className="relative rounded-lg shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
@@ -70,7 +70,7 @@ export const LoginPage: React.FC = () => {
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="admin@stockflow.com o vendedor"
+                  placeholder="admin@stockflow.com or seller"
                   className="block w-full pl-10 pr-3 py-2.5 bg-slate-800/70 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition"
                 />
               </div>
@@ -81,7 +81,7 @@ export const LoginPage: React.FC = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-slate-300 mb-1"
               >
-                Contraseña
+                Password
               </label>
               <div className="relative rounded-lg shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
@@ -109,10 +109,10 @@ export const LoginPage: React.FC = () => {
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Autenticando...
+                    Authenticating...
                   </>
                 ) : (
-                  'Ingresar al sistema'
+                  'Sign In'
                 )}
               </button>
             </div>
@@ -120,7 +120,7 @@ export const LoginPage: React.FC = () => {
 
           <div className="mt-6 pt-6 border-t border-slate-800/80 text-center">
             <span className="text-xs text-slate-500">
-              Sistema bajo Especificación SDD · Ficha 3413974
+              System governed by SDD Specification · Class 3413974
             </span>
           </div>
         </div>
